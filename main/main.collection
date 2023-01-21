@@ -1,31 +1,10 @@
 name: "default"
-scale_along_z: 0
-embedded_instances {
-  id: "HoodedRun"
-  data: "embedded_components {\n"
-  "  id: \"sprite\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"tile_set: \\\"/assets/HoodedRun.tilesource\\\"\\n"
-  "default_animation: \\\"anim\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "blend_mode: BLEND_MODE_ALPHA\\n"
-  "\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  ""
+instances {
+  id: "player"
+  prototype: "/assets/player.go"
   position {
-    x: 0.0
-    y: 0.0
+    x: 383.0
+    y: 399.0
     z: 0.0
   }
   rotation {
@@ -40,18 +19,43 @@ embedded_instances {
     z: 1.0
   }
 }
+scale_along_z: 0
 embedded_instances {
-  id: "HoodedWalk"
-  data: "embedded_components {\n"
-  "  id: \"sprite\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"tile_set: \\\"/assets/HoodedWalk.tilesource\\\"\\n"
-  "default_animation: \\\"anim\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "blend_mode: BLEND_MODE_ALPHA\\n"
+  id: "map"
+  data: "components {\n"
+  "  id: \"level1\"\n"
+  "  component: \"/assets/level1.tilemap\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/assets/level1.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"border\\\"\\n"
+  "mask: \\\"HoodedRun\\\"\\n"
+  "linear_damping: 0.0\\n"
+  "angular_damping: 0.0\\n"
+  "locked_rotation: false\\n"
+  "bullet: false\\n"
   "\"\n"
   "  position {\n"
-  "    x: 33.0\n"
+  "    x: 0.0\n"
   "    y: 0.0\n"
   "    z: 0.0\n"
   "  }\n"
@@ -64,9 +68,9 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
+    x: 323.0
+    y: 328.0
+    z: 9.0
   }
   rotation {
     x: 0.0

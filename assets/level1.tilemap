@@ -14773,6 +14773,11 @@ layers {
   }
 }
 layers {
+  id: "invisible_walls"
+  z: 0.0
+  is_visible: 1
+}
+layers {
   id: "ground"
   z: 1.0
   is_visible: 1

@@ -1,11 +1,31 @@
 name: "game"
 collection_instances {
   id: "player"
-  collection: "/game/player.collection"
+  collection: "/assets/player.collection"
   position {
     x: 117.0
     y: 102.0
     z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemyMud"
+  collection: "/assets/enemyMud.collection"
+  position {
+    x: 260.0
+    y: 88.0
+    z: 0.0
   }
   rotation {
     x: 0.0
@@ -49,6 +69,7 @@ embedded_instances {
   "restitution: 0.5\\n"
   "group: \\\"\\\"\\n"
   "mask: \\\"player\\\"\\n"
+  "mask: \\\"enemy\\\"\\n"
   "linear_damping: 0.0\\n"
   "angular_damping: 0.0\\n"
   "locked_rotation: true\\n"

@@ -61,7 +61,6 @@ local function update_animations(self)
 	sprite.set_hflip("#sprite", self.velocity.x < 0)
 	-- make sure the right animation is playing
 	if self.ground_contact then
-		print(self.attacking)
 		if self.attacking then
 			play_animation(self, anim_attack)	
 		elseif self.velocity.x == 0 then

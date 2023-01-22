@@ -3,8 +3,8 @@ collection_instances {
   id: "player"
   collection: "/assets/player.collection"
   position {
-    x: 117.0
-    y: 102.0
+    x: 386.0
+    y: 71.0
     z: 1.0
   }
   rotation {
@@ -23,8 +23,8 @@ collection_instances {
   id: "enemyMud"
   collection: "/assets/enemyMud.collection"
   position {
-    x: 566.0
-    y: 110.0
+    x: 569.0
+    y: 148.0
     z: 1.0
   }
   rotation {

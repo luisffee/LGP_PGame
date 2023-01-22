@@ -7,12 +7,17 @@ local max_speed = 50
 -- gravity pulling the player down in pixel units
 local gravity = -1900
 
+local move_accel = 100
+local ground_contact = false
+local wall_contact = false
+
 
 
 -- pre-hashing ids improves performance
 local msg_contact_point_response = hash("contact_point_response")
 local msg_animation_done = hash("animation_done")
 local group_obstacle = hash("ground")
+local group_invisible_wall = hash("invisible_walls")
 local anim_walk = hash("run")
 local anim_idle = hash("idle")
 local anim_attack = hash("attack")
@@ -24,18 +29,20 @@ function init(self)
 
 	-- activate camera attached to the player collection
 	-- this will send camera updates to the render script
-	msg.post("camera", "acquire_camera_focus")
+	-- msg.post("camera", "acquire_camera_focus")
 
 	-- initial player velocity
 	self.velocity = vmath.vector3(0, 0, 0)
 	-- support variable to keep track of collisions and separation
-	self.correction = vmath.vector3()
+	-- self.correction = vmath.vector3()
 	-- if the player stands on ground or not
-	self.ground_contact = false
+	-- self.ground_contact = false
 	-- the currently playing animation
 	self.anim = nil
 
 	self.attacking = false
+
+	self.movement = 1
 end
 
 local function play_animation(self, anim)
@@ -64,13 +71,31 @@ local function update_animations(self)
 end
 
 function update(self, dt)
-	-- apply gravity
-	self.velocity.y = self.velocity.y + gravity * dt
 
-	-- move player
-	local pos = go.get_position()
-	pos = pos + self.velocity * dt
-	go.set_position(pos)
+	local target_speed = self.movement * max_speed
+	local speed_diff = target_speed - self.velocity.x
+
+	local accel = vmath.vector3(0, gravity, 0)
+
+	if (speed_diff ~= 0) then
+		if (speed_diff < 0) then
+			accel.x =- move_accel
+		else
+			accel.x = move_accel
+		end
+	end
+
+	local dv = accel * dt
+	if (math.abs(dv.x) > math.abs(speed_diff)) then
+		dv.x = speed_diff
+	end
+
+	local v0 = self.velocity
+	self.velocity = self.velocity + dv
+
+	local dp = (v0 + self.velocity) * dt
+
+	go.set_position(go.get_position() + dp)
 
 	-- update animations based on state (ground, air, move and idle)
 	update_animations(self)
@@ -84,36 +109,39 @@ end
 
 -- https://defold.com/manuals/physics/#resolving-kinematic-collisions
 local function handle_obstacle_contact(self, normal, distance)
-	if distance > 0 then
-		-- First, project the accumulated correction onto
-		-- the penetration vector
-		local proj = vmath.project(self.correction, normal * distance)
-		if proj < 1 then
-			-- Only care for projections that does not overshoot.
-			local comp = (distance - distance * proj) * normal
-			-- Apply compensation
-			go.set_position(go.get_position() + comp)
-			-- Accumulate correction done
-			self.correction = self.correction + comp
-		end
-	end
+	local proj = vmath.dot(self.correction, normal)
+	local comp = (distance - proj) * normal
 
-	-- collided with a wall
-	-- stop horizontal movement
-	if math.abs(normal.x) > 0.7 then
-		self.wall_contact = true
-		self.velocity.x = 0
-	end
-	-- collided with the ground
-	-- stop vertical movement
+	self.correction = self.correction + comp
+
+	go.set_position(go.get_position() + comp)
+
 	if normal.y > 0.7 then
 		self.ground_contact = true
-		self.velocity.y = 0
 	end
-	-- collided with the ceiling
-	-- stop vertical movement
-	if normal.y < -0.7 then
-		self.velocity.y = 0
+
+	proj = vmath.dot(self.velocity, normal)
+	if proj < 0 then
+		self.velocity = self.velocity - proj * normal
+	end
+end
+
+local function handle_wall_contact(self, normal, distance)
+	local proj = vmath.dot(self.correction, normal)
+	local comp = (distance - proj) * normal
+
+	self.correction = self.correction + comp
+
+	go.set_position(go.get_position() + comp)
+
+	if normal.x ~= 0 then
+		self.wall_contact = true
+		self.movement = self.movement * -1
+	end
+
+	proj = vmath.dot(self.velocity, normal)
+	if proj < 0 then
+		self.velocity = self.velocity - proj * normal
 	end
 end
 
@@ -123,20 +151,12 @@ function on_message(self, message_id, message, sender)
 		-- check that the object is something we consider an obstacle
 		if message.group == group_obstacle then
 			handle_obstacle_contact(self, message.normal, message.distance)
+		elseif message.group == group_invisible_wall and not self.wall_contact then
+			handle_wall_contact(self, message.normal, message.distance)
 		end
 	end
 end
 
-
-
-local function walk(self, direction)
-	if self.ground_contact then
-		self.velocity.x = max_speed * direction
-	else
-		-- move slower in the air
-		self.velocity.x = max_speed * air_acceleration_factor * direction
-	end
-end
 
 local function attack(self)
 	if self.ground_contact then

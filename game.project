@@ -1,5 +1,5 @@
 [project]
-title = Platformer game-2
+title = LGP_PGame
 
 [bootstrap]
 main_collection = /game/game.collectionc

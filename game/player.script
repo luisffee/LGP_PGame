@@ -18,10 +18,12 @@ local group_obstacle = hash("ground")
 local input_left = hash("left")
 local input_right = hash("right")
 local input_jump = hash("jump")
-local anim_walk = hash("walk")
+local input_attack = hash("attack")
+local anim_walk = hash("run")
 local anim_idle = hash("idle")
 local anim_jump = hash("jump")
-local anim_fall = hash("fall")
+-- local anim_fall = hash("fall")
+local anim_attack = hash("attack")
 
 
 function init(self)
@@ -66,7 +68,7 @@ local function update_animations(self)
 		if self.velocity.y > 0 then
 			play_animation(self, anim_jump)
 		else
-			play_animation(self, anim_fall)
+			play_animation(self, anim_idle)
 		end
 	end
 end
@@ -163,11 +165,19 @@ local function walk(self, direction)
 	end
 end
 
+local function attack(self)
+	if self.ground_contact then
+		play_animation(self, anim_attack)
+	end
+end
+
 function on_input(self, action_id, action)
 	if action_id == input_left then
 		walk(self, -action.value)
 	elseif action_id == input_right then
 		walk(self, action.value)
+	elseif action_id == input_attack then
+		attack(self)
 	elseif action_id == input_jump then
 		if action.pressed then
 			jump(self)

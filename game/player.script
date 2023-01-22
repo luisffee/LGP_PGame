@@ -82,7 +82,7 @@ function update(self, dt)
 
 	-- update animations based on state (ground, air, move and idle)
 	update_animations(self)
-
+	
 	-- reset volatile state
 	self.correction = vmath.vector3()
 	self.ground_contact = false

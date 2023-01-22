@@ -14773,11 +14773,6 @@ layers {
   }
 }
 layers {
-  id: "invisible_walls"
-  z: 0.0
-  is_visible: 1
-}
-layers {
   id: "ground"
   z: 1.0
   is_visible: 1
@@ -22286,6 +22281,155 @@ layers {
     x: 108
     y: 14
     tile: 201
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+}
+layers {
+  id: "invisible_walls"
+  z: 10.0
+  is_visible: 1
+  cell {
+    x: 30
+    y: 4
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 46
+    y: 4
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 52
+    y: 4
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 60
+    y: 4
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 81
+    y: 4
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 90
+    y: 4
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 30
+    y: 5
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 46
+    y: 5
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 52
+    y: 5
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 60
+    y: 5
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 81
+    y: 5
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 90
+    y: 5
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 30
+    y: 6
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 46
+    y: 6
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 52
+    y: 6
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 60
+    y: 6
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 81
+    y: 6
+    tile: 615
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 90
+    y: 6
+    tile: 615
     h_flip: 0
     v_flip: 0
     rotate90: 0

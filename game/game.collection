@@ -23,9 +23,9 @@ collection_instances {
   id: "enemyMud"
   collection: "/assets/enemyMud.collection"
   position {
-    x: 260.0
-    y: 88.0
-    z: 0.0
+    x: 566.0
+    y: 110.0
+    z: 1.0
   }
   rotation {
     x: 0.0
@@ -60,19 +60,46 @@ embedded_instances {
   "  }\n"
   "}\n"
   "embedded_components {\n"
-  "  id: \"collisionobject\"\n"
+  "  id: \"ground\"\n"
   "  type: \"collisionobject\"\n"
   "  data: \"collision_shape: \\\"/assets/level1.tilemap\\\"\\n"
   "type: COLLISION_OBJECT_TYPE_STATIC\\n"
   "mass: 0.0\\n"
   "friction: 0.1\\n"
   "restitution: 0.5\\n"
-  "group: \\\"\\\"\\n"
+  "group: \\\"ground\\\"\\n"
   "mask: \\\"player\\\"\\n"
   "mask: \\\"enemy\\\"\\n"
   "linear_damping: 0.0\\n"
   "angular_damping: 0.0\\n"
   "locked_rotation: true\\n"
+  "bullet: false\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"invisible_walls\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/assets/level1.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"invisible_walls\\\"\\n"
+  "mask: \\\"enemy\\\"\\n"
+  "linear_damping: 0.0\\n"
+  "angular_damping: 0.0\\n"
+  "locked_rotation: false\\n"
   "bullet: false\\n"
   "\"\n"
   "  position {\n"

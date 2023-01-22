@@ -64,7 +64,7 @@ animations {
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 60
+  fps: 12
   flip_horizontal: 0
   flip_vertical: 0
 }
@@ -79,7 +79,7 @@ animations {
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 60
+  fps: 12
   flip_horizontal: 0
   flip_vertical: 0
 }
@@ -110,7 +110,7 @@ animations {
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 60
+  fps: 12
   flip_horizontal: 0
   flip_vertical: 0
 }
@@ -149,7 +149,7 @@ animations {
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 60
+  fps: 12
   flip_horizontal: 0
   flip_vertical: 0
 }
@@ -188,7 +188,18 @@ animations {
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 60
+  fps: 12
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "fall"
+  images {
+    image: "/assets/sprites/player/idle00.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 12
   flip_horizontal: 0
   flip_vertical: 0
 }

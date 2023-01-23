@@ -10,14 +10,16 @@ local gravity = -1900
 -- take-off speed when jumping in pixel units
 local jump_takeoff_speed = 750
 
-local player_health = 16
+local player_health = 500
 
 
 -- pre-hashing ids improves performance
 local msg_contact_point_response = hash("contact_point_response")
 local msg_animation_done = hash("animation_done")
 local msg_trigger_response = hash("trigger_response")
--- local msg_damage = hash("damage")
+local group_key = hash("key")
+local group_book = hash("book")
+local group_gem = hash("gem")
 local group_obstacle = hash("ground")
 local group_danger = hash("danger")
 local group_enemy = hash("enemy_hit")
@@ -55,7 +57,12 @@ function init(self)
 	self.hit = false
 	self.dead = false
 
-	self.player_health = 16
+	self.player_health = 500
+
+	self.key = false
+	self.book = false
+	self.gem = false
+	self.pass_to_victory = false
 end
 
 local function play_animation(self, anim)
@@ -164,12 +171,24 @@ local function handle_player_damage(self)
 	go.set_position(pos)
 	self.player_health = self.player_health - 1
 	self.hit = true
-	print(self.player_health)
+	-- print(self.player_health)
 	
 	if self.player_health <= 0 then
 		inipos = vmath.vector3(109, 86, 1)
 		go.set_position(inipos)
-		self.player_health = 16
+		self.player_health = 5
+	end
+end
+
+local function items_to_victory(self)
+	if self.key and self.book and self.gem then
+		self.pass_to_victory = true
+	end
+end
+
+local function all_to_victory(self)
+	if self.pass_to_victory then
+		print("YOU WIN !!!!")
 	end
 end
 
@@ -181,6 +200,19 @@ function on_message(self, message_id, message, sender)
 				handle_player_damage(self)
 			elseif message.group == group_danger then
 				handle_player_damage(self)
+			elseif message.group == group_key then
+				print("Key adquired")
+				self.key = true
+				items_to_victory(self)
+				all_to_victory(self)
+			elseif message.group == group_book then
+				print("Book adquired")
+				self.book = true
+				items_to_victory(self)
+			elseif message.group == group_gem then
+				print("Gem adquired")
+				self.gem = true
+				items_to_victory(self)
 			end
 		end
 	end

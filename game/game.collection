@@ -3,8 +3,8 @@ collection_instances {
   id: "player"
   collection: "/assets/player.collection"
   position {
-    x: 109.0
-    y: 86.0
+    x: 6697.0
+    y: 1297.0
     z: 1.0
   }
   rotation {
@@ -200,8 +200,8 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "crystal"
-  collection: "/assets/crystal.collection"
+  id: "gem"
+  collection: "/assets/gem.collection"
   position {
     x: 5274.0
     y: 298.0
@@ -223,8 +223,8 @@ collection_instances {
   id: "key"
   collection: "/assets/key.collection"
   position {
-    x: 1041.0
-    y: 92.0
+    x: 6704.0
+    y: 1154.0
     z: 2.0
   }
   rotation {

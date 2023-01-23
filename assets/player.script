@@ -10,14 +10,14 @@ local gravity = -1900
 -- take-off speed when jumping in pixel units
 local jump_takeoff_speed = 750
 
-local player_health = 8
+local player_health = 16
 
 
 -- pre-hashing ids improves performance
 local msg_contact_point_response = hash("contact_point_response")
 local msg_animation_done = hash("animation_done")
 local msg_trigger_response = hash("trigger_response")
-local msg_damage = hash("damage")
+-- local msg_damage = hash("damage")
 local group_obstacle = hash("ground")
 local group_danger = hash("danger")
 local group_enemy = hash("enemy_hit")
@@ -55,7 +55,7 @@ function init(self)
 	self.hit = false
 	self.dead = false
 
-	self.player_health = 8
+	self.player_health = 16
 end
 
 local function play_animation(self, anim)
@@ -69,8 +69,12 @@ local function play_animation(self, anim)
 end
 
 local function hit(self)
-	return hash("hit")
+	self.hit = false
 end
+local function dead(self)
+	self.dead = false
+end
+
 local function update_animations(self)
 	-- make sure the player character faces the right way
 	sprite.set_hflip("#sprite", self.velocity.x < 0)
@@ -78,12 +82,13 @@ local function update_animations(self)
 	if self.ground_contact then
 		if self.hit then
 			play_animation(self, anim_hit)
-			t = timer.delay(0.6, false, hit)
-			self.hit = false
-			timer.cancel(t)
+			timer.delay(0.6, false, hit)
 		elseif self.dead then
+			self.velocity.x = 0
+			self.velocity.y = 0
 			play_animation(self, anim_die)
-			self.dead = false
+			timer.delay(2, false, dead)
+			go.delete()
 		elseif self.attacking then
 			play_animation(self, anim_attack)	
 		elseif self.velocity.x == 0 then
@@ -159,13 +164,10 @@ local function handle_player_damage(self)
 	local pos = go.get_position()
 	pos = pos + (self.velocity * -1) / 12
 	go.set_position(pos)
-	play_animation(self, anim_hit)
 	self.hit = true
 	print(self.player_health)
 	if self.player_health <= 0 then
 		self.dead = true
-		play_animation(self, anim_die)
-		go.delete()
 	end
 end
 
@@ -173,6 +175,8 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == msg_trigger_response and sender.fragment == hash("hit") then
 		if message.group == group_enemy then
+			handle_player_damage(self)
+		elseif message.group == group_danger then
 			handle_player_damage(self)
 		end
 	end

@@ -123582,30 +123582,6 @@ layers {
     rotate90: 0
   }
   cell {
-    x: 296
-    y: 4
-    tile: 569
-    h_flip: 0
-    v_flip: 0
-    rotate90: 0
-  }
-  cell {
-    x: 297
-    y: 4
-    tile: 569
-    h_flip: 0
-    v_flip: 0
-    rotate90: 0
-  }
-  cell {
-    x: 298
-    y: 4
-    tile: 569
-    h_flip: 0
-    v_flip: 0
-    rotate90: 0
-  }
-  cell {
     x: 323
     y: 4
     tile: 569

@@ -88,7 +88,6 @@ local function update_animations(self)
 			self.velocity.y = 0
 			play_animation(self, anim_die)
 			timer.delay(2, false, dead)
-			go.delete()
 		elseif self.attacking then
 			play_animation(self, anim_attack)	
 		elseif self.velocity.x == 0 then
@@ -160,24 +159,29 @@ local function handle_obstacle_contact(self, normal, distance)
 end
 
 local function handle_player_damage(self)
-	self.player_health = self.player_health - 1
 	local pos = go.get_position()
-	pos = pos + (self.velocity * -1) / 12
+	pos = pos + (self.velocity * -1) / 10
 	go.set_position(pos)
+	self.player_health = self.player_health - 1
 	self.hit = true
 	print(self.player_health)
+	
 	if self.player_health <= 0 then
-		self.dead = true
+		inipos = vmath.vector3(109, 86, 1)
+		go.set_position(inipos)
+		self.player_health = 16
 	end
 end
 
 function on_message(self, message_id, message, sender)
 
 	if message_id == msg_trigger_response and sender.fragment == hash("hit") then
-		if message.group == group_enemy then
-			handle_player_damage(self)
-		elseif message.group == group_danger then
-			handle_player_damage(self)
+		if message.enter then
+			if message.group == group_enemy then
+				handle_player_damage(self)
+			elseif message.group == group_danger then
+				handle_player_damage(self)
+			end
 		end
 	end
 	-- check if we received a contact point message

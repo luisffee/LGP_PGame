@@ -3,8 +3,8 @@ collection_instances {
   id: "player"
   collection: "/assets/player.collection"
   position {
-    x: 5070.0
-    y: 169.0
+    x: 109.0
+    y: 86.0
     z: 1.0
   }
   rotation {

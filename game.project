@@ -42,6 +42,7 @@ shared_state = 1
 [physics]
 gravity_y = -1000.0
 scale = 0.01
+debug = 0
 
 [tilemap]
 max_tile_count = 4096

@@ -161,6 +161,7 @@ end
 local function handle_player_contact(self, normal, distance)
 	player_contact = true
 	print("PLAYER CONTACT")
+	msg.post("/player/player#player","damage")
 
 end
 
@@ -188,7 +189,7 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == msg_trigger_response and sender.fragment == hash("hitbox") then
 		if message.enter then
-			if message.group == group_player and self.player_contact then
+			if message.group == group_player and not self.player_contact then
 				handle_player_damage(self, message.normal, message.distance)
 			end	
 		end

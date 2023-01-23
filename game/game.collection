@@ -3,8 +3,8 @@ collection_instances {
   id: "player"
   collection: "/assets/player.collection"
   position {
-    x: 1310.0
-    y: 123.0
+    x: 4698.0
+    y: 150.0
     z: 1.0
   }
   rotation {
@@ -23,8 +23,8 @@ collection_instances {
   id: "enemyMud"
   collection: "/assets/enemyMud.collection"
   position {
-    x: 1339.0
-    y: 117.0
+    x: 530.0
+    y: 105.0
     z: 1.0
   }
   rotation {
@@ -43,8 +43,8 @@ collection_instances {
   id: "enemyZDroid"
   collection: "/assets/enemyZDroid.collection"
   position {
-    x: 1361.0
-    y: 149.0
+    x: 2376.0
+    y: 126.0
     z: 1.0
   }
   rotation {
@@ -63,8 +63,108 @@ collection_instances {
   id: "enemySDroid"
   collection: "/assets/enemySDroid.collection"
   position {
-    x: 1418.0
-    y: 129.0
+    x: 4578.0
+    y: 140.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemyMud1"
+  collection: "/assets/enemyMud.collection"
+  position {
+    x: 874.0
+    y: 109.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemyMud2"
+  collection: "/assets/enemyMud.collection"
+  position {
+    x: 1338.0
+    y: 127.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemyZDroid1"
+  collection: "/assets/enemyZDroid.collection"
+  position {
+    x: 3127.0
+    y: 162.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemySDroid1"
+  collection: "/assets/enemySDroid.collection"
+  position {
+    x: 4820.0
+    y: 144.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemySDroid2"
+  collection: "/assets/enemySDroid.collection"
+  position {
+    x: 6318.0
+    y: 1181.0
     z: 1.0
   }
   rotation {
@@ -137,6 +237,33 @@ embedded_instances {
   "restitution: 0.5\\n"
   "group: \\\"invisible_walls\\\"\\n"
   "mask: \\\"enemy\\\"\\n"
+  "linear_damping: 0.0\\n"
+  "angular_damping: 0.0\\n"
+  "locked_rotation: false\\n"
+  "bullet: false\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"danger\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/assets/level1.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"danger\\\"\\n"
+  "mask: \\\"player\\\"\\n"
   "linear_damping: 0.0\\n"
   "angular_damping: 0.0\\n"
   "locked_rotation: false\\n"

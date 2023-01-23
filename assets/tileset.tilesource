@@ -2853,7 +2853,7 @@ convex_hulls {
 convex_hulls {
   index: 2141
   count: 4
-  collision_group: ""
+  collision_group: "damage"
 }
 convex_hulls {
   index: 2145
@@ -2908,12 +2908,12 @@ convex_hulls {
 convex_hulls {
   index: 2169
   count: 6
-  collision_group: ""
+  collision_group: "damage"
 }
 convex_hulls {
   index: 2175
   count: 6
-  collision_group: ""
+  collision_group: "damage"
 }
 convex_hulls {
   index: 2181
@@ -3285,6 +3285,7 @@ convex_hulls {
   count: 0
   collision_group: ""
 }
+collision_groups: "damage"
 collision_groups: "ground"
 collision_groups: "invisible_walls"
 extrude_borders: 2

@@ -3,8 +3,8 @@ collection_instances {
   id: "player"
   collection: "/assets/player.collection"
   position {
-    x: 4783.0
-    y: 109.0
+    x: 1310.0
+    y: 123.0
     z: 1.0
   }
   rotation {
@@ -23,8 +23,48 @@ collection_instances {
   id: "enemyMud"
   collection: "/assets/enemyMud.collection"
   position {
-    x: 569.0
-    y: 148.0
+    x: 1339.0
+    y: 117.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemyZDroid"
+  collection: "/assets/enemyZDroid.collection"
+  position {
+    x: 1361.0
+    y: 149.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemySDroid"
+  collection: "/assets/enemySDroid.collection"
+  position {
+    x: 1418.0
+    y: 129.0
     z: 1.0
   }
   rotation {
@@ -115,6 +155,26 @@ embedded_instances {
   "  }\n"
   "}\n"
   ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "go"
+  data: ""
   position {
     x: 0.0
     y: 0.0

@@ -62,7 +62,7 @@ function init(self)
 	self.key = false
 	self.book = false
 	self.gem = false
-	self.pass_to_victory = false
+	self.pass_to_victory = true
 end
 
 local function play_animation(self, anim)
@@ -189,7 +189,9 @@ end
 local function all_to_victory(self)
 	if self.pass_to_victory then
 		print("YOU WIN !!!!")
+		msg.post("/YouWin", "enable")
 	end
+	
 end
 
 function on_message(self, message_id, message, sender)

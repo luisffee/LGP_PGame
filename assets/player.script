@@ -8,9 +8,9 @@ local max_speed = 250
 -- gravity pulling the player down in pixel units
 local gravity = -1900
 -- take-off speed when jumping in pixel units
-local jump_takeoff_speed = 750
+local jump_takeoff_speed = 800
 
-local player_health = 500
+local player_health = 5
 
 
 -- pre-hashing ids improves performance
@@ -57,7 +57,7 @@ function init(self)
 	self.hit = false
 	self.dead = false
 
-	self.player_health = 500
+	self.player_health = 5
 
 	self.key = false
 	self.book = false
@@ -222,7 +222,7 @@ function on_message(self, message_id, message, sender)
 		if message.group == group_obstacle then
 			handle_obstacle_contact(self, message.normal, message.distance)
 		elseif message.group == group_enemy then
-			print('hi')
+			-- print('hi')
 			--handle_player_damage(self)
 		end
 	end

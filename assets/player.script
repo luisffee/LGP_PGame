@@ -63,7 +63,7 @@ function init(self)
 	-- Se o item gem foi adquirido
 	self.gem = false
 	-- Se todas as condições foram checkadas para acabar o jogo
-	self.pass_to_victory = true
+	self.pass_to_victory = false
 end
 
 local function play_animation(self, anim)

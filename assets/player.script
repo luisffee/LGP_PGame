@@ -1,19 +1,18 @@
--- Player logic
+-- Lógica do Player
 
--- these are the tweaks for the mechanics, feel free to change them for a different feeling
--- acceleration factor to use when air-borne
+-- Variavel que controla a velocidade de movimento do player no ar
 local air_acceleration_factor = 0.8
--- max speed right/left
+-- Velocidade maxima do player
 local max_speed = 250
--- gravity pulling the player down in pixel units
+-- Gravidade do player
 local gravity = -1900
--- take-off speed when jumping in pixel units
+-- Multiplicador da velocidade do player no começo do pulo
 local jump_takeoff_speed = 800
-
+-- Vida do player
 local player_health = 5
 
 
--- pre-hashing ids improves performance
+-- Hash IDS para interagir com o cenario
 local msg_contact_point_response = hash("contact_point_response")
 local msg_animation_done = hash("animation_done")
 local msg_trigger_response = hash("trigger_response")
@@ -37,40 +36,42 @@ local anim_hit = hash("hit")
 
 
 function init(self)
-	-- this lets us handle input in this script
+	-- Permite o uso dos inputs do player
 	msg.post(".", "acquire_input_focus")
 
-	-- activate camera attached to the player collection
-	-- this will send camera updates to the render script
+	-- Ativa a camera na collection do player
 	msg.post("camera", "acquire_camera_focus")
 
-	-- initial player velocity
+	-- velocidade inicial do player
 	self.velocity = vmath.vector3(0, 0, 0)
-	-- support variable to keep track of collisions and separation
+	-- Variavel de suporte para lidar com alteraçoes de colisão
 	self.correction = vmath.vector3()
-	-- if the player stands on ground or not
+	-- Se o player está em contato com o chão
 	self.ground_contact = false
-	-- the currently playing animation
+	-- Animação atual
 	self.anim = nil
-
-	self.attacking = false
+	-- Se o player levou dano
 	self.hit = false
+	-- Se o player morreu
 	self.dead = false
-
+	-- Vida do player
 	self.player_health = 5
-
+	-- Se o item key foi adquirido
 	self.key = false
+	-- Se o item book foi adquirido
 	self.book = false
+	-- Se o item gem foi adquirido
 	self.gem = false
+	-- Se todas as condições foram checkadas para acabar o jogo
 	self.pass_to_victory = true
 end
 
 local function play_animation(self, anim)
-	-- only play animations which are not already playing
+	-- Verifica se a animação já está ativa
 	if self.anim ~= anim then
-		-- tell the sprite to play the animation
+		-- Muda a animção do sprite
 		sprite.play_flipbook("#sprite", anim)
-		-- remember which animation is playing
+		-- Salva a animação atual
 		self.anim = anim
 	end
 end
@@ -83,9 +84,9 @@ local function dead(self)
 end
 
 local function update_animations(self)
-	-- make sure the player character faces the right way
+	-- Confere se o sprite está na direção correta
 	sprite.set_hflip("#sprite", self.velocity.x < 0)
-	-- make sure the right animation is playing
+	-- Verificações para as animaçoes
 	if self.ground_contact then
 		if self.hit then
 			play_animation(self, anim_hit)
@@ -112,67 +113,61 @@ local function update_animations(self)
 end
 
 function update(self, dt)
-	-- apply gravity
+	-- Aplica a gravidade
 	self.velocity.y = self.velocity.y + gravity * dt
 
-	-- move player
+	-- Movimenta o player
 	local pos = go.get_position()
 	pos = pos + self.velocity * dt
 	go.set_position(pos)
 
-	-- update animations based on state (ground, air, move and idle)
+	-- Atualiza as animações do sprite
 	update_animations(self)
 	
-	-- reset volatile state
+	-- Reseta as condições
 	self.correction = vmath.vector3()
 	self.ground_contact = false
 	self.wall_contact = false
 	self.attacking = false
 end
 
--- https://defold.com/manuals/physics/#resolving-kinematic-collisions
 local function handle_obstacle_contact(self, normal, distance)
 	if distance > 0 then
-		-- First, project the accumulated correction onto
-		-- the penetration vector
+		-- Projeta a correção acumulada 
 		local proj = vmath.project(self.correction, normal * distance)
 		if proj < 1 then
-			-- Only care for projections that does not overshoot.
 			local comp = (distance - distance * proj) * normal
-			-- Apply compensation
+			-- Aplica compensação
 			go.set_position(go.get_position() + comp)
-			-- Accumulate correction done
+			-- Acumula a correção
 			self.correction = self.correction + comp
 		end
 	end
 
-	-- collided with a wall
-	-- stop horizontal movement
+	-- Colisão com parede
 	if math.abs(normal.x) > 0.7 then
 		self.wall_contact = true
 		self.velocity.x = 0
 	end
-	-- collided with the ground
-	-- stop vertical movement
+	-- Colisão com o chão
 	if normal.y > 0.7 then
 		self.ground_contact = true
 		self.velocity.y = 0
 	end
-	-- collided with the ceiling
-	-- stop vertical movement
+	-- Colisão com o teto
 	if normal.y < -0.7 then
 		self.velocity.y = 0
 	end
 end
 
 local function handle_player_damage(self)
+	-- Rebound quando levar dano
 	local pos = go.get_position()
 	pos = pos + (self.velocity * -1) / 10
 	go.set_position(pos)
 	self.player_health = self.player_health - 1
 	self.hit = true
-	-- print(self.player_health)
-	
+	-- Se a vida chegar a 0, o player morre
 	if self.player_health <= 0 then
 		inipos = vmath.vector3(109, 86, 1)
 		go.set_position(inipos)
@@ -181,36 +176,41 @@ local function handle_player_damage(self)
 end
 
 local function items_to_victory(self)
+	-- Verifica as condiçoes
 	if self.key and self.book and self.gem then
 		self.pass_to_victory = true
 	end
 end
 
 local function all_to_victory(self)
+	-- Verifica a condição para vitoria
 	if self.pass_to_victory then
-		print("YOU WIN !!!!")
 		msg.post("/YouWin", "enable")
 	end
 	
 end
 
 function on_message(self, message_id, message, sender)
-
+	-- Recebe as mensagens de colisão 
 	if message_id == msg_trigger_response and sender.fragment == hash("hit") then
 		if message.enter then
+			-- Inimigo
 			if message.group == group_enemy then
 				handle_player_damage(self)
+			-- Espinhos
 			elseif message.group == group_danger then
 				handle_player_damage(self)
+			-- Item Key
 			elseif message.group == group_key then
-				print("Key adquired")
 				self.key = true
 				items_to_victory(self)
 				all_to_victory(self)
+			-- Item Book
 			elseif message.group == group_book then
 				print("Book adquired")
 				self.book = true
 				items_to_victory(self)
+			-- Item Gem
 			elseif message.group == group_gem then
 				print("Gem adquired")
 				self.gem = true
@@ -218,43 +218,39 @@ function on_message(self, message_id, message, sender)
 			end
 		end
 	end
-	-- check if we received a contact point message
+	-- Recebe as mensagens de colisão
 	if message_id == msg_contact_point_response then
-		-- check that the object is something we consider an obstacle
+		-- Chão
 		if message.group == group_obstacle then
 			handle_obstacle_contact(self, message.normal, message.distance)
-		elseif message.group == group_enemy then
-			-- print('hi')
-			--handle_player_damage(self)
 		end
 	end
 end
 
 local function jump(self)
-	-- only allow jump from ground
-	-- (extend this with a counter to do things like double-jumps)
+	-- Somente se estiver no chão
 	if self.ground_contact then
-		-- set take-off speed
+		-- Velocidade de pulo inicial
 		self.velocity.y = jump_takeoff_speed
-		-- play animation
+		-- Animação de pulo
 		play_animation(self, anim_jump)
 		self.ground_contact = false
 	end
 end
 
 local function abort_jump(self)
-	-- cut the jump short if we are still going up
+	-- Interrompe o pulo
 	if self.velocity.y > 0 then
-		-- scale down the upwards speed
 		self.velocity.y = self.velocity.y * 0.5
 	end
 end
 
 local function walk(self, direction)
+	-- Se estiver no chão
 	if self.ground_contact then
 		self.velocity.x = max_speed * direction
 	else
-		-- move slower in the air
+		-- Move devagar no ar
 		self.velocity.x = max_speed * air_acceleration_factor * direction
 	end
 end
@@ -266,6 +262,7 @@ local function attack(self)
 end
 
 function on_input(self, action_id, action)
+	-- Recebe os inputs
 	if action_id == input_left then
 		walk(self, -action.value)
 	elseif action_id == input_right then
